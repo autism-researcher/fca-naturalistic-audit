@@ -1,0 +1,26 @@
+data/highd/*
+data/ngsim/*
+data/waymo/*
+!data/*/.gitkeep
+results/per_dataset/*.json
+results/boundaries/*.json
+results/figures/*.png
+results/figures/*.pdf
+results/transfer/*.json
+results/sensitivity/*.json
+results/verdicts/*.json
+results/pilot_n100/
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+# Pipeline run artifacts
+*.log
+*.pid
+nohup.out
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp

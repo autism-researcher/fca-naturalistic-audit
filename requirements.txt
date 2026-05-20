@@ -1,0 +1,9 @@
+numpy==1.26.4
+pandas==2.2.2
+scipy==1.13.1
+scikit-learn==1.4.2
+statsmodels==0.14.2
+matplotlib==3.8.4
+seaborn==0.13.2
+# Waymo Open Motion (install in a SEPARATE conda env; TF dependency is heavy):
+#   pip install waymo-open-dataset-tf-2-12-0
