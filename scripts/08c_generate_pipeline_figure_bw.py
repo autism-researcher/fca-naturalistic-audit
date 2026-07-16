@@ -162,10 +162,12 @@ def main():
 
     gate_marker(ax, 8.30, "Gate 2\n(Git tag)")
 
-    # Row 3: features
+    # Row 3: features (raw TTC is NOT an input to R; it is retained
+    # separately for H_OFF3 -- label made explicit per review)
     box(ax, 6.0, 7.45, 7.4, 0.9,
-        r"8 features  $f(x_t) \in [0,1]^{8}$  +  raw TTC",
-        "process", fontsize=11)
+        "8 normalized risk features  $f(x_t) \\in [0,1]^{8}$\n"
+        r"(raw TTC retained separately for $H_{\mathrm{OFF3}}$)",
+        "process", fontsize=10)
 
     arrow(ax, 3.0, 8.63, 4.5, 7.92)
     arrow(ax, 6.0, 8.63, 6.0, 7.92)
@@ -267,29 +269,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-1, label="Data"),
-        _LegendBox(facecolor="1.00", lw=1.1, label="Processing"),
-        _LegendBox(facecolor="1.00", lw=1.2, double=True,
-                   label="Frozen (Paper 2)"),
-        _LegendBox(facecolor="1.00", lw=1.2, linestyle=(0, (5, 3)),
-                   label="Hypothesis test"),
-        _LegendBox(facecolor="0.78", lw=1.6, label="Output"),
-    ]
-    ax.legend(
-        handles=handles,
-        handler_map={_LegendBox: _LegendBoxHandler()},
-        loc="lower center", bbox_to_anchor=(0.5, -0.04),
-        ncol=5, frameon=False, fontsize=10,
-        handlelength=2.2, handleheight=1.4, columnspacing=1.6,
-    )
-
-    fig.savefig(OUT_PNG, dpi=300, bbox_inches="tight",
-                facecolor="white", edgecolor="white")
-    fig.savefig(OUT_PDF, bbox_inches="tight",
-                facecolor="white", edgecolor="white")
-    plt.close(fig)
-    print("Saved:", OUT_PNG)
-    print("Saved:", OUT_PDF)
 
 
 if __name__ == "__main__":

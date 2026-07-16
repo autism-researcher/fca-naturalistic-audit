@@ -77,7 +77,8 @@ def extract_features(scenario):
     if valid.sum() < 5 * FS_HZ:
         return None, None, False, "valid_too_short"
 
-    # Use only valid samples; carry-forward fill for short gaps
+    # Validity: enforced by the valid-count length check above and the strict
+    # any-tick |a|>10 exclusion below; no gap filling is applied.
     speed = speed_raw.copy()
     a = np.gradient(speed, DT)
     if np.any(np.abs(a) > 10.0):
