@@ -1,0 +1,63 @@
+{
+  "dataset": "highd",
+  "variant": "provided_ttc_for_H_OFF3",
+  "N": 5000,
+  "ttc_threshold_s": 2.0,
+  "n_comparisons_bonferroni": 9,
+  "tests": {
+    "0.10": {
+      "H_OFF3_provided_ttc": {
+        "U": 32425.5,
+        "p": 9.9999990000001e-08,
+        "p_method": "mc_permutation_10000000",
+        "p_is_upper_bound": true,
+        "alpha_bonf": 0.00011111111111111112,
+        "effect_size_r": -0.6238731971153846,
+        "pass": true,
+        "n_crossing": 8,
+        "n_noncrossing": 4992,
+        "audit": {
+          "n_trajectories": 5000,
+          "n_with_provided_ttc": 5000,
+          "n_skipped_no_lookup": 0
+        }
+      }
+    },
+    "0.15": {
+      "H_OFF3_provided_ttc": {
+        "U": 59735.5,
+        "p": 9.9999990000001e-08,
+        "p_method": "mc_permutation_10000000",
+        "p_is_upper_bound": true,
+        "alpha_bonf": 0.00011111111111111112,
+        "effect_size_r": -0.3322516615370892,
+        "pass": true,
+        "n_crossing": 18,
+        "n_noncrossing": 4982,
+        "audit": {
+          "n_trajectories": 5000,
+          "n_with_provided_ttc": 5000,
+          "n_skipped_no_lookup": 0
+        }
+      }
+    },
+    "0.20": {
+      "H_OFF3_provided_ttc": {
+        "U": 82042.0,
+        "p": 9.9999990000001e-08,
+        "p_method": "mc_permutation_10000000",
+        "p_is_upper_bound": true,
+        "alpha_bonf": 0.00011111111111111112,
+        "effect_size_r": -0.3192683417085427,
+        "pass": true,
+        "n_crossing": 25,
+        "n_noncrossing": 4975,
+        "audit": {
+          "n_trajectories": 5000,
+          "n_with_provided_ttc": 5000,
+          "n_skipped_no_lookup": 0
+        }
+      }
+    }
+  }
+}
