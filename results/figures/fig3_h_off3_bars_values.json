@@ -1,0 +1,155 @@
+[
+ {
+  "dataset": "highd",
+  "tau": 0.1,
+  "n_crossing": 8,
+  "n_noncrossing": 4992,
+  "mean_crossing": 5.0,
+  "ci95_crossing": [
+   1.1218750000000002,
+   9.625
+  ],
+  "mean_noncrossing": 0.005008012820512821,
+  "ci95_noncrossing": [
+   0.0,
+   0.014423076923076924
+  ],
+  "bootstrap": "trajectory-level percentile bootstrap, 1000 within-group resamples, seed 42"
+ },
+ {
+  "dataset": "highd",
+  "tau": 0.15,
+  "n_crossing": 18,
+  "n_noncrossing": 4982,
+  "mean_crossing": 3.2222222222222223,
+  "ci95_crossing": [
+   0.6111111111111112,
+   6.222222222222222
+  ],
+  "mean_noncrossing": 0.0014050582095543958,
+  "ci95_noncrossing": [
+   0.0,
+   0.004220192693697306
+  ],
+  "bootstrap": "trajectory-level percentile bootstrap, 1000 within-group resamples, seed 42"
+ },
+ {
+  "dataset": "highd",
+  "tau": 0.2,
+  "n_crossing": 25,
+  "n_noncrossing": 4975,
+  "mean_crossing": 2.6,
+  "ci95_crossing": [
+   0.72,
+   4.920999999999999
+  ],
+  "mean_noncrossing": 0.0,
+  "ci95_noncrossing": [
+   0.0,
+   0.0
+  ],
+  "bootstrap": "trajectory-level percentile bootstrap, 1000 within-group resamples, seed 42"
+ },
+ {
+  "dataset": "ngsim",
+  "tau": 0.1,
+  "n_crossing": 4310,
+  "n_noncrossing": 690,
+  "mean_crossing": 9.180742459396752,
+  "ci95_crossing": [
+   8.890649651972158,
+   9.485933874709977
+  ],
+  "mean_noncrossing": 0.20144927536231885,
+  "ci95_noncrossing": [
+   0.12025362318840581,
+   0.2985507246376812
+  ],
+  "bootstrap": "trajectory-level percentile bootstrap, 1000 within-group resamples, seed 42"
+ },
+ {
+  "dataset": "ngsim",
+  "tau": 0.15,
+  "n_crossing": 4471,
+  "n_noncrossing": 529,
+  "mean_crossing": 8.870722433460076,
+  "ci95_crossing": [
+   8.557582196376648,
+   9.155955043614403
+  ],
+  "mean_noncrossing": 0.0888468809073724,
+  "ci95_noncrossing": [
+   0.035916824196597356,
+   0.16828922495274098
+  ],
+  "bootstrap": "trajectory-level percentile bootstrap, 1000 within-group resamples, seed 42"
+ },
+ {
+  "dataset": "ngsim",
+  "tau": 0.2,
+  "n_crossing": 4548,
+  "n_noncrossing": 452,
+  "mean_crossing": 8.726473175021988,
+  "ci95_crossing": [
+   8.41731530343008,
+   9.026797493403695
+  ],
+  "mean_noncrossing": 0.04424778761061947,
+  "ci95_noncrossing": [
+   0.015486725663716814,
+   0.08185840707964602
+  ],
+  "bootstrap": "trajectory-level percentile bootstrap, 1000 within-group resamples, seed 42"
+ },
+ {
+  "dataset": "waymo",
+  "tau": 0.1,
+  "n_crossing": 55,
+  "n_noncrossing": 4945,
+  "mean_crossing": 2.018181818181818,
+  "ci95_crossing": [
+   1.3818181818181818,
+   2.8363636363636364
+  ],
+  "mean_noncrossing": 0.17027300303336704,
+  "ci95_noncrossing": [
+   0.14053589484327603,
+   0.20528816986855405
+  ],
+  "bootstrap": "trajectory-level percentile bootstrap, 1000 within-group resamples, seed 42"
+ },
+ {
+  "dataset": "waymo",
+  "tau": 0.15,
+  "n_crossing": 101,
+  "n_noncrossing": 4899,
+  "mean_crossing": 1.811881188118812,
+  "ci95_crossing": [
+   1.3267326732673268,
+   2.396287128712871
+  ],
+  "mean_noncrossing": 0.1571749336599306,
+  "ci95_noncrossing": [
+   0.1275617472953664,
+   0.19045723617064705
+  ],
+  "bootstrap": "trajectory-level percentile bootstrap, 1000 within-group resamples, seed 42"
+ },
+ {
+  "dataset": "waymo",
+  "tau": 0.2,
+  "n_crossing": 128,
+  "n_noncrossing": 4872,
+  "mean_crossing": 1.8984375,
+  "ci95_crossing": [
+   1.3748046875,
+   2.4296875
+  ],
+  "mean_noncrossing": 0.14573070607553365,
+  "ci95_noncrossing": [
+   0.11616892446633825,
+   0.17836617405582922
+  ],
+  "bootstrap": "trajectory-level percentile bootstrap, 1000 within-group resamples, seed 42"
+ }
+]

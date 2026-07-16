@@ -64,7 +64,12 @@ def load_all():
             d = json.load(f); bnds[d["dataset"]] = d
     for fpath in sorted(glob.glob(str(ROOT / "results/verdicts/*.json"))):
         with open(fpath) as f:
-            d = json.load(f); verds[d["dataset"]] = d
+            d = json.load(f)
+        if isinstance(d, dict) and "dataset" in d and "variant" not in d:
+            verds[d["dataset"]] = d
+        # else: auxiliary files (e.g., hoff3_corrected.json, or the
+        # provided-TTC sensitivity variant) -- not the primary
+        # per-dataset verdict files; skip.
     tpath = ROOT / "results/transfer/matrix.json"
     if tpath.exists():
         with open(tpath) as f:
@@ -172,6 +177,10 @@ def fig3_h_off3_bars(feats, bnds, outdir):
 
     width = 0.36
     x_positions = np.arange(len(TAUS))
+    # 2026-07 addition: archive the exact plotted values (means, 95%
+    # bootstrap CI endpoints, group sizes) so the figure is
+    # independently reconstructible from the repository.
+    values_dump = []
 
     for ax, ds in zip(axes, datasets):
         d = feats[ds]
@@ -204,6 +213,18 @@ def fig3_h_off3_bars(feats, bnds, outdir):
             n_cross.append(int(mask.sum()))
             means_nc.append(mn);    errs_nc_lo.append(lo_n);    errs_nc_hi.append(hi_n)
             n_nc.append(int((~mask).sum()))
+            values_dump.append({
+                "dataset": ds, "tau": tau,
+                "n_crossing": int(mask.sum()),
+                "n_noncrossing": int((~mask).sum()),
+                "mean_crossing": mc,
+                "ci95_crossing": [mc - lo_c, mc + hi_c],
+                "mean_noncrossing": mn,
+                "ci95_noncrossing": [mn - lo_n, mn + hi_n],
+                "bootstrap": f"trajectory-level percentile bootstrap, "
+                             f"{BOOT_N} within-group resamples, "
+                             f"seed {BOOT_SEED}",
+            })
 
         bars_c = ax.bar(
             x_positions - width / 2, means_cross, width,
@@ -248,6 +269,10 @@ def fig3_h_off3_bars(feats, bnds, outdir):
     plt.savefig(out, bbox_inches="tight")
     plt.close()
     print(f"-> {out}")
+    vals_out = outdir / "fig3_h_off3_bars_values.json"
+    with open(vals_out, "w") as f:
+        json.dump(values_dump, f, indent=1)
+    print(f"-> {vals_out}")
 
 
 def fig4_transfer(trans, outdir):
