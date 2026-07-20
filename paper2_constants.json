@@ -1,9 +1,9 @@
 {
-  "source": "Paper 2 Table V (pooled across seeds 1000/2000/3000)",
+  "source": "Paper 2 Table V, RESCALED to unit-normalized risk (old/0.94)",
   "B_sim": {
-    "0.10": 0.5116,
-    "0.15": 0.4885,
-    "0.20": 0.4733
+    "0.10": 0.544255,
+    "0.15": 0.519681,
+    "0.20": 0.503511
   },
   "softness_delta": 0.12,
   "DKW_epsilon_at_N5000_delta05": 0.0193,
