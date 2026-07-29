@@ -16,9 +16,10 @@ the source log — nothing is computed or fabricated here.
 USAGE (self-contained — runs with no arguments):
     python make_sim_calibration.py
 
-The default --source is the raw simulator log shipped alongside this script
-(simulator_episode_log.csv: controller_label, seed0, episode_id, max_R for every
-episode). Override with --source to point at your own CARLA log if you prefer.
+The default --source is the simulator log shipped alongside this script
+(simulator_episode_log.csv: the NORMAL-driving calibration episodes only —
+columns controller_label, seed0, episode_id, max_R). Override with --source to
+point at your own CARLA log if you prefer.
 This is a one-off provenance/build tool; Paper 3 does NOT need it at runtime
 (the resulting CSV is already shipped in the repo).
 """
