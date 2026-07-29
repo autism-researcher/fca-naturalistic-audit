@@ -175,7 +175,7 @@ def main():
 
     # Row 4: frozen weights + R(x)
     box(ax, 2.4, 5.95, 3.6, 1.30,
-        "Frozen weights $w$\n(from Paper 2, $\\sum w = 0.94$)\nNO retuning",
+        "Frozen weights $w$\n(fixed input, $\\sum w = 0.94$)\nNO retuning",
         "frozen", fontsize=9.5)
     box(ax, 7.9, 5.95, 4.0, 1.30,
         r"$R(x_t) = w^{\top} f(x_t)$"
@@ -195,8 +195,8 @@ def main():
     box(ax, 4.6, 4.10, 4.6, 1.30, bd_text, "process", fontsize=10.5)
 
     bsim_text = (
-        r"$B^{\,\mathrm{sim}}$ from Paper 2"
-        + "\n(published constant;"
+        r"$B^{\,\mathrm{sim}}$ (fixed input)"
+        + "\n(calibrated constant;"
         + "\nno re-run)"
     )
     box(ax, 9.9, 4.10, 3.2, 1.30, bsim_text, "frozen", fontsize=9.5)
@@ -245,7 +245,7 @@ def main():
         _LegendBox(facecolor="0.88", lw=1.1, label="Data"),
         _LegendBox(facecolor="1.00", lw=1.1, label="Processing"),
         _LegendBox(facecolor="1.00", lw=1.2, double=True,
-                   label="Frozen (Paper 2)"),
+                   label="Fixed input"),
         _LegendBox(facecolor="1.00", lw=1.2, linestyle=(0, (5, 3)),
                    label="Hypothesis test"),
         _LegendBox(facecolor="0.78", lw=1.6, label="Output"),
