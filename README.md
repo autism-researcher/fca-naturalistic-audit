@@ -1,4 +1,4 @@
-# Paper 3 — Offline Validation Pipeline
+# Forward-Collision Avoidance on Naturalistic Driving Data
 
 Pre-registered, multi-dataset validation of a quantile-calibrated FCA supervisor.
 Locked OSF pre-registration: 2026-05-11. Self-contained: the supervisor under audit
