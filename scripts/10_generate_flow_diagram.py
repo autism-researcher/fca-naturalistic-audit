@@ -59,7 +59,7 @@ arrow(9.5, 7.58, 8.0, 7.10)
 
 # Frozen weights (left)
 box(2.0, 5.4, 3.2, 0.85,
-    "Frozen weights $w$\n(from Paper 2, sum 0.94)\nNO retuning",
+    "Frozen weights $w$\n(fixed input, sum 0.94)\nNO retuning",
     FROZEN_COLOR, fontsize=10)
 arrow(3.6, 5.4, 5.1, 5.4)
 
@@ -69,9 +69,9 @@ box(7.7, 5.4, 3.2, 0.85,
     PROC_COLOR, fontsize=11)
 arrow(6.0, 6.5, 7.7, 5.85)
 
-# B_sim from Paper 2 (right)
+# B_sim (fixed input, right)
 box(10.5, 4.2, 3.0, 0.85,
-    "$B^{sim}$ from Paper 2\n(published constant;\nno re-run)",
+    "$B^{sim}$ (fixed input;\ncalibrated constant;\nno re-run)",
     FROZEN_COLOR, fontsize=10)
 
 # Boundary
@@ -118,7 +118,7 @@ from matplotlib.patches import Patch
 legend_items = [
     Patch(facecolor=DATA_COLOR,    edgecolor="black", label="Data"),
     Patch(facecolor=PROC_COLOR,    edgecolor="black", label="Processing"),
-    Patch(facecolor=FROZEN_COLOR,  edgecolor="black", label="Frozen (Paper 2)"),
+    Patch(facecolor=FROZEN_COLOR,  edgecolor="black", label="Fixed input"),
     Patch(facecolor=TEST_COLOR,    edgecolor="black", label="Test"),
     Patch(facecolor=VERDICT_COLOR, edgecolor="black", label="Output"),
 ]

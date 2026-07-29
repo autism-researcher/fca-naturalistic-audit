@@ -1,7 +1,8 @@
 # Paper 3 — Offline Validation Pipeline
 
 Pre-registered, multi-dataset validation of a quantile-calibrated FCA supervisor.
-Locked OSF pre-registration: 2026-05-11. Companion CARLA pre-reg: https://osf.io/sfdj2.
+Locked OSF pre-registration: 2026-05-11. Self-contained: the supervisor under audit
+(risk weights and calibrated boundaries B_sim) is fully specified within this repo.
 
 ---
 
@@ -9,8 +10,10 @@ Locked OSF pre-registration: 2026-05-11. Companion CARLA pre-reg: https://osf.io
 
 ```
 paper3_pipeline/
-├── carla_weights.json         # 8 weights from Paper 2 (frozen, sum 0.94)
-├── paper2_constants.json      # B_sim values per τ from Paper 2 Table V
+├── carla_weights.json         # 8 composite-risk weights (frozen, sum 0.94)
+├── supervisor_spec.json       # supervisor under audit: risk weights + calibrated B_sim per τ
+├── compute_B.py               # recompute B_sim (sim) and B_d (naturalistic) with one rule
+├── data/sim_calibration/      # simulator NORMAL peak-risk sample -> reproduces B_sim
 ├── deviations_log.md
 ├── requirements.txt
 ├── data/{ngsim,waymo,highd}/  # raw data (gitignored)

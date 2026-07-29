@@ -15,7 +15,8 @@ def load_weights():
     return w, cfg["bounds"]
 
 def load_B_sim():
-    with open(REPO_ROOT / "paper2_constants.json") as f:
+    """Calibrated simulator boundary of the FCA supervisor under audit (this work)."""
+    with open(REPO_ROOT / "supervisor_spec.json") as f:
         cfg = json.load(f)
     return {float(k): float(v) for k, v in cfg["B_sim"].items()}
 

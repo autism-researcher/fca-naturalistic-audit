@@ -1,0 +1,15 @@
+{
+  "description": "Specification of the quantile-calibrated forward-collision-avoidance supervisor audited in this paper. Self-contained: requires no external paper.",
+  "risk_features": ["speed","acceleration","jerk","steer_var","lane_offset","ttc","headway","density"],
+  "risk_weights": [0.08, 0.10, 0.10, 0.08, 0.12, 0.25, 0.15, 0.06],
+  "weights_sum": 0.94,
+  "softness_delta": 0.12,
+  "B_sim": {
+    "0.10": 0.5116,
+    "0.15": 0.4885,
+    "0.20": 0.4733
+  },
+  "B_sim_provenance": "Calibrated boundary of the supervisor under audit: the (1-tau) quantile of simulator NORMAL-driving peak risk, averaged over calibration seeds. Reproducible from data/sim_calibration/sim_normal_peak_risk.csv via compute_B.py --recompute (agreement within 0.003).",
+  "DKW_epsilon_at_N5000_delta05": 0.0193,
+  "DKW_N_floor_eps05_delta05": 738
+}
