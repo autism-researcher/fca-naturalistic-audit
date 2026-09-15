@@ -7,7 +7,7 @@
     "speed":        {"type": "upper",  "max": 28.0,   "unit": "m/s"},
     "acceleration": {"type": "upper",  "max": 7.0,    "unit": "m/s^2"},
     "jerk":         {"type": "upper",  "max": 12.0,   "unit": "m/s^3"},
-    "steer_var":    {"type": "upper",  "max": 0.35,   "unit": "rad"},
+    "steer_var":    {"type": "upper",  "max": 0.35,   "unit": "(rad/s)^2", "label": "Yaw-rate variance (1 s window); internal key name 'steer_var' retained for pipeline compatibility"},
     "lane_offset":  {"type": "upper",  "max": 1.5,    "unit": "m"},
     "ttc":          {"type": "range",  "min": 0.5,    "max": 8.0,  "unit": "s"},
     "headway":      {"type": "range",  "min": 2.0,    "max": 60.0, "unit": "m"},

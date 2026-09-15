@@ -9,7 +9,7 @@ Locked OSF pre-registration: 2026-05-11. Self-contained: the supervisor under au
 ## Project layout
 
 ```
-paper3_pipeline/
+fca-naturalistic-audit/
 ├── carla_weights.json         # 8 composite-risk weights (frozen, sum 0.94)
 ├── supervisor_spec.json       # supervisor under audit: risk weights + calibrated B_sim per τ
 ├── compute_B.py               # recompute B_sim (sim) and B_d (naturalistic) with one rule
@@ -33,7 +33,8 @@ paper3_pipeline/
 ## Setup (once)
 
 ```bash
-cd paper3_pipeline
+git clone https://github.com/autism-researcher/fca-naturalistic-audit.git
+cd fca-naturalistic-audit
 python3 -m venv .venv
 source .venv/bin/activate           # Linux/Mac
 # .venv\Scripts\activate            # Windows
