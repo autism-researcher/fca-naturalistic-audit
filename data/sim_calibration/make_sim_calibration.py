@@ -2,7 +2,7 @@
 make_sim_calibration.py
 =======================
 Regenerate  sim_normal_peak_risk.csv  — the simulator NORMAL-driving peak-risk
-sample that Paper 3 uses to (re)compute B_sim.
+sample used to (re)compute B_sim.
 
 WHAT IT DOES (pure extraction, no values are altered):
     1. read the raw CARLA episode log
@@ -20,8 +20,8 @@ The default --source is the simulator log shipped alongside this script
 (simulator_episode_log.csv: the NORMAL-driving calibration episodes only —
 columns controller_label, seed0, episode_id, max_R). Override with --source to
 point at your own CARLA log if you prefer.
-This is a one-off provenance/build tool; Paper 3 does NOT need it at runtime
-(the resulting CSV is already shipped in the repo).
+This is a one-off provenance/build tool; the pipeline does NOT need it at
+runtime (the resulting CSV is already shipped in the repo).
 """
 
 import argparse
