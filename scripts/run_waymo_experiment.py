@@ -1,4 +1,4 @@
-"""End-to-end Waymo Open Motion experiment runner (Paper 3).
+"""End-to-end Waymo Open Motion experiment runner (naturalistic audit).
 
 This single script orchestrates the full Waymo-only pipeline that the existing
 numbered scripts (03 -> 04 -> 05) would otherwise run separately. It is built
@@ -23,7 +23,7 @@ PREREQUISITES (one-time):
      the Git tag `pipeline-frozen-pre-confirmatory` exists. Override only with
      --skip-gate-check and document any override in deviations_log.md.
 
-RUN (from paper3_pipeline/ root, inside the waymo conda env):
+RUN (from the repository root, inside the waymo conda env):
 
   # Small pilot first to confirm everything works:
   python scripts/run_waymo_experiment.py --n 100

@@ -10,11 +10,10 @@ If per-distribution recalibration works on naturalistic data,
 |tau_hat^{test} - tau| should fall within the DKW band
 eps(N_test, delta=0.05) on every (dataset, tau) cell.
 
-Run from paper3_pipeline/ root:
+Run from the repository root:
     python scripts/recalibration_70_30_split.py
 
-Paste the output table back to the manuscript-revision conversation
-so the actual numbers can be filled into the new §VI-D subsection.
+The output table can be used to update the manuscript results.
 """
 from __future__ import annotations
 
@@ -104,7 +103,7 @@ def main():
     print("PASS means |tau_hat^test - tau| <= eps_DKW(N_test, delta=0.05).")
     print()
 
-    print("Compact JSON record (paste back):")
+    print("Compact JSON record:")
     out = {
         ds: {f"{tau:.2f}": {k: v for k, v in r.items() if k != "within_dkw"}
              for tau, r in row.items()}

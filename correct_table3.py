@@ -15,7 +15,7 @@ All entries are compared against alpha_bonf = 0.001/9 = 1.11e-4.
 U and rank-biserial r are recomputed and must equal the released
 results/verdicts/*.json values (they will: those were always correct).
 
-Run from the paper3_pipeline directory (NGSIM loads ~850 MB, allow RAM):
+Run from the repository root (NGSIM loads ~850 MB, allow RAM):
   python correct_table3.py
 Writes:
   results/figures/table_verdicts_corrected.tex

@@ -42,7 +42,7 @@ in the paper and possibly investigate the closing-speed convention.
 Usage
 -----
     python scripts\run_highd_sensitivity_ttc.py ^
-        --highd-dir "D:\New Paper3\paper3_pipeline\data\highd\highd-dataset-v1.0\data"
+        --highd-dir "<PROJECT_DIR>\data\highd\highd-dataset-v1.0\data"
 
 (The --highd-dir flag MUST point to the same data directory used by
 run_highd_experiment.py, otherwise the trajectory_id -> CSV lookup fails.)

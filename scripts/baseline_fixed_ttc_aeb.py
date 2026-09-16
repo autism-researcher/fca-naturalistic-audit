@@ -5,11 +5,11 @@ raw TTC < threshold_s on each of NGSIM, HighD, Waymo. The result
 is the natural fixed-TTC AEB engagement rate baseline, directly
 comparable to the FCA supervisor's realized rate tau_hat at B_sim.
 
-Run from paper3_pipeline/ root:
+Run from the repository root:
     python scripts/baseline_fixed_ttc_aeb.py
 
-Outputs a small table to stdout. Paste it back to fill the
-placeholder values in the manuscript's §V-B baseline subsection.
+Outputs a small table to stdout. The values can be used to fill the
+manuscript's §V-B baseline subsection.
 """
 from __future__ import annotations
 
@@ -72,7 +72,7 @@ def main():
         print(f"{ds:<8} {cells[0]:>12} {cells[1]:>12} {cells[2]:>12}")
     print("=" * 60)
     print()
-    print("Paste the TTC<2.0s column back to fill the manuscript placeholder.")
+    print("The TTC<2.0s column fills the manuscript placeholder.")
     print()
     print("Compact JSON output for record:")
     print(json.dumps({ds: {str(thr): r[0] for thr, r in row.items()}

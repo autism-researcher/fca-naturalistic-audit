@@ -8,15 +8,15 @@
 # new output against your original cached file for reproducibility.
 #
 # Run from the Ubuntu (WSL) terminal, AFTER the one-time env setup:
-#     bash /mnt/d/TITS/repos_review/fca-naturalistic-audit/process_waymo.sh
+#     bash /mnt/d/<PROJECT_DIR>/process_waymo.sh
 #
 # Writes: results/per_dataset/waymo_features.json  (+ boundaries + verdicts)
 # ==========================================================================
 set -e
 
-REPO="/mnt/d/TITS/repos_review/fca-naturalistic-audit"
-WAYMO_RAW="/mnt/d/PhD_Experiments/REAL_NATURALISTIC_CORPORA/waymo"
-CACHED="/mnt/d/New Paper3/paper3_pipeline/results/per_dataset/waymo_features.json"
+REPO="/mnt/d/<PROJECT_DIR>"
+WAYMO_RAW="/path/to/waymo/raw/shards"
+CACHED="/path/to/your/original/cached/waymo_features.json"
 
 # --- activate the waymo conda env -----------------------------------------
 source ~/miniconda3/etc/profile.d/conda.sh
@@ -53,7 +53,7 @@ print(f"   NEW run:      n={n_new}")
 for tau in (0.10,0.15,0.20):
     print(f"      tau={tau:.2f}  B_d={s_new[tau][0]:.4f}  tau_hat={s_new[tau][1]:.4f}")
 try:
-    n_old,s_old = summ("/mnt/d/New Paper3/paper3_pipeline/results/per_dataset/waymo_features.json")
+    n_old,s_old = summ("/path/to/your/original/cached/waymo_features.json")
     print(f"   ORIGINAL:     n={n_old}   (match: {n_new==n_old})")
 except Exception as e:
     print("   (original cached file not readable here:", e, ")")

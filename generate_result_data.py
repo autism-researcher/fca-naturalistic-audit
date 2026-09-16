@@ -1,5 +1,5 @@
 """
-Paper 3 — ONE consolidated experiment.
+Naturalistic audit — ONE consolidated experiment.
 
 Replaces the six separate scripts (H_OFF1, H_OFF2, H_OFF3, baseline,
 ablation, transfer) with a SINGLE pass over the real corpora that emits
@@ -28,9 +28,9 @@ From those columns the 'Proofs' sheet computes, by formula only:
 Run from the repo root (needs results/per_dataset/*_features.json,
 produced by scripts/03_extract_features_at_scale.py):
 
-    python paper3_generate_result_data.py
+    python generate_result_data.py
 
-Output: Paper3_result_data_master.xlsx
+Output: result_data_master.xlsx
 """
 from __future__ import annotations
 
@@ -51,7 +51,7 @@ except ImportError:
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
-# ---- risk configuration (self-contained; no Paper 2 dependency) -------------
+# ---- risk configuration (self-contained; no external dependency) -------------
 # feature order: speed, accel, jerk, steer_var, lane_offset, ttc, headway, density
 WEIGHTS = np.array([0.08, 0.10, 0.10, 0.08, 0.12, 0.25, 0.15, 0.06], dtype=float)
 TTC_INDEX = 5
@@ -142,7 +142,7 @@ def build_workbook(rows, out_path, demo=False):
     r0 = 1
     if demo:
         ws.cell(1, 1, "DEMO DATA — synthetic rows to show structure. Run "
-                      "paper3_generate_result_data.py on your real corpora to replace.")
+                      "generate_result_data.py on your real corpora to replace.")
         ws.cell(1, 1).fill = warn; ws.cell(1, 1).font = warnf
         ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=len(COLS))
         r0 = 2
@@ -279,7 +279,7 @@ def build_workbook(rows, out_path, demo=False):
     # ---- Sheet 3: README ----
     rs = wb.create_sheet("README")
     lines = [
-        ("Paper 3 — one experiment, one result-data table", tf),
+        ("Naturalistic audit — one experiment, one result-data table", tf),
         ("", None),
         ("WHY ONE SCRIPT.  The six original scripts all read the same extracted features and all "
          "reduce to per-trajectory numbers. This script measures those numbers ONCE (the "
@@ -298,8 +298,8 @@ def build_workbook(rows, out_path, demo=False):
         ("", None),
         ("HOW TO RUN.  From the repo root, after scripts/03 has produced "
          "results/per_dataset/*_features.json:", None),
-        ("      python paper3_generate_result_data.py", Font(name="Consolas")),
-        ("  -> writes Paper3_result_data_master.xlsx with real rows; open it and every "
+        ("      python generate_result_data.py", Font(name="Consolas")),
+        ("  -> writes result_data_master.xlsx with real rows; open it and every "
          "proof is already computed.", None),
     ]
     r = 1
@@ -322,8 +322,8 @@ def main():
         sys.exit(f"No feature files at {per}\n"
                  f"Run scripts/03_extract_features_at_scale.py first.")
     rows = extract_rows(per)
-    n = build_workbook(rows, ROOT / "Paper3_result_data_master.xlsx", demo=False)
-    print(f"\nWrote Paper3_result_data_master.xlsx  ({n} trajectory rows). "
+    n = build_workbook(rows, ROOT / "result_data_master.xlsx", demo=False)
+    print(f"\nWrote result_data_master.xlsx  ({n} trajectory rows). "
           f"Open the 'Proofs' sheet — all values are already computed.")
 
 

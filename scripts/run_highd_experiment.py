@@ -1,4 +1,4 @@
-r"""End-to-end HighD experiment runner (Paper 3).
+r"""End-to-end HighD experiment runner (naturalistic audit).
 
 This single script orchestrates the full HighD-only pipeline that the numbered
 scripts (03 -> 04 -> 05) would otherwise run separately. It mirrors
@@ -22,7 +22,7 @@ PREREQUISITES (one-time):
          02_tracks.csv          02_tracksMeta.csv          02_recordingMeta.csv
          ...                    (up to 60 recordings)
 
-     Default search path: paper3_pipeline/data/highd/
+     Default search path: <repository root>/data/highd/
      Override with --highd-dir if your data lives elsewhere.
 
   2. Install pipeline dependencies (once, in any Python env):
@@ -33,16 +33,16 @@ PREREQUISITES (one-time):
      (the script refuses to run otherwise). Override only with
      --skip-gate-check and document the override in deviations_log.md.
 
-RUN (from paper3_pipeline/ root, on Windows in cmd / PowerShell, or any shell):
+RUN (from the repository root, on Windows in cmd / PowerShell, or any shell):
 
   # Small pilot first to confirm everything works:
   python scripts\run_highd_experiment.py ^
-      --highd-dir "D:\New Paper3\paper3_pipeline\data\highd\highd-dataset-v1.0\data" ^
+      --highd-dir "<PROJECT_DIR>\data\highd\highd-dataset-v1.0\data" ^
       --n 100
 
   # Full pre-registered run:
   python scripts\run_highd_experiment.py ^
-      --highd-dir "D:\New Paper3\paper3_pipeline\data\highd\highd-dataset-v1.0\data" ^
+      --highd-dir "<PROJECT_DIR>\data\highd\highd-dataset-v1.0\data" ^
       --n 5000
 
   (On macOS / Linux replace ^ line continuations with \ and use forward slashes.)

@@ -29,7 +29,7 @@ STATUS: POST-HOC / EXPLORATORY. Not in the OSF pre-registration. Does
 NOT change the confirmatory H_OFF3 verdict. Log one line in
 deviations_log.md classified as 'post-hoc addition'.
 
-Run from paper3_pipeline/ root:
+Run from the repository root:
     python scripts/ablation_ttc_hoff3.py
 """
 from __future__ import annotations
@@ -122,7 +122,7 @@ def main():
     print("r_full here partitions by the full-R (1-tau)-quantile (matched"
           " baseline), not by B_sim, so it need not equal Table II.")
     print()
-    print("Compact JSON (paste back to the manuscript conversation):")
+    print("Compact JSON:")
     print(json.dumps(out, indent=2, default=str))
 
 

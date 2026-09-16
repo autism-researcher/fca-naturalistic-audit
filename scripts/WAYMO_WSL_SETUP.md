@@ -52,17 +52,14 @@ python -c "from waymo_open_dataset.protos import scenario_pb2; print('Waymo SDK 
 
 ## 4. Access your project folder from WSL
 
-Windows path:
-`C:\Users\AMT\OneDrive\Documents\Claude\Projects\New Paper 3\`
+Replace `<PROJECT_DIR>` below with the local directory containing this
+repository (e.g. a path on your `D:` drive).
 
-D: drive path:
-`D:\New Paper3\paper3_pipeline\`
-
-WSL view of D: drive:
-`/mnt/d/New Paper3/paper3_pipeline/`
+WSL view of a Windows drive:
+`/mnt/d/<PROJECT_DIR>/`
 
 ```bash
-cd "/mnt/d/New Paper3/paper3_pipeline"
+cd "/mnt/d/<PROJECT_DIR>"
 ls
 ```
 
@@ -73,7 +70,7 @@ You should see `src/`, `scripts/`, `data/`, etc.
 ## 5. (Optional) Tag the pipeline at Gate 2
 
 ```bash
-cd "/mnt/d/New Paper3/paper3_pipeline"
+cd "/mnt/d/<PROJECT_DIR>"
 git init
 git add .
 git commit -m "Pipeline frozen for pre-confirmatory Waymo run"
@@ -88,7 +85,7 @@ Or pass `--skip-gate-check` for the pilot and document in `deviations_log.md`.
 
 ```bash
 conda activate waymo
-cd "/mnt/d/New Paper3/paper3_pipeline"
+cd "/mnt/d/<PROJECT_DIR>"
 
 # Pilot:
 python scripts/run_waymo_experiment.py --n 100 --skip-gate-check

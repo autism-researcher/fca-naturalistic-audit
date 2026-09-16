@@ -1,5 +1,5 @@
 """
-compute_B.py  --  Paper 3 (naturalistic audit), hypothesis H_OFF1
+compute_B.py  --  naturalistic audit, hypothesis H_OFF1
 =================================================================
 SELF-CONTAINED. No dependency on any other paper. Both boundaries use ONE rule.
 

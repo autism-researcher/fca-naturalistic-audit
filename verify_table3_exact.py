@@ -12,14 +12,14 @@ What this shows
 3. The valid exact permutation p-values are still far below
    alpha_bonf = 1.11e-4, so every PASS verdict in Table III stands.
 
-Expected (from Claude's verification run, 2026-07-15):
+Expected values from the verified reference calculation (2026-07-15):
   highd  tau=0.10  exact p ~ 2.96e-11   (reported < 1e-300, impossible: floor 1e-25)
   highd  tau=0.15  exact p ~ 6.62e-13   (reported 5.0e-217,  impossible: floor 1e-56)
   highd  tau=0.20  exact p ~ 3.11e-17   (reported 1.6e-305,  impossible: floor 1e-67)
   waymo  all tau   MC p < 1/(M+1)       (true value far smaller; verdict PASS)
   ngsim  all tau   asymptotic ~ valid   (mild ties, huge groups; verdict PASS)
 
-Run from the paper3_pipeline directory:
+Run from the repository root:
   python verify_table3_exact.py highd            (fast, the decisive one)
   python verify_table3_exact.py highd waymo      (adds Waymo, ~1 min)
   python verify_table3_exact.py                  (all three; NGSIM loads 850 MB JSON)

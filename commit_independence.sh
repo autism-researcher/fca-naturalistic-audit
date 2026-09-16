@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Commit full independence of the Paper 3 repo from Paper 2.
-# Usage (Git Bash / WSL):  cd /d/TITS/repos_review/fca-naturalistic-audit && bash commit_independence.sh
+# Usage (Git Bash / WSL):  cd /d/<PROJECT_DIR>/fca-naturalistic-audit && bash commit_independence.sh
 set -e
 
 # 1) remove the orphaned Paper 2-named file (nothing reads it anymore)
