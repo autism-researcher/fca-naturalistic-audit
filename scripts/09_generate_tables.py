@@ -11,18 +11,58 @@ TAUS = [0.10, 0.15, 0.20]
 def cell(v, ok_field="pass"):
     return "PASS" if (isinstance(v, dict) and v.get(ok_field)) else "FAIL"
 
+def disjunctive_pass(per_dataset_flags):
+    """Pre-registered disjunctive criterion: PASS iff there exists at least
+    one dataset for which EVERY tau in TAUS passes -- NOT merely "any cell
+    anywhere passes". `per_dataset_flags` is {dataset: [pass_tau1, pass_tau2, ...]}.
+
+    2026-09 bugfix (deviations register): the previous implementation took
+    any(<flat list of all dataset*tau cells>), which is equivalent to "does
+    any single cell pass anywhere" -- a strictly weaker (easier-to-satisfy)
+    condition than the pre-registered "all three tau on at least one
+    dataset". On this study's actual results every hypothesis is unanimous
+    (H_OFF1/H_OFF2 fail all 9 cells, H_OFF3 passes all 9), so the two
+    formulations happened to agree numerically and no reported verdict was
+    wrong -- but the old code was incorrect for any non-unanimous result
+    pattern. See tests/test_pipeline.py::test_disjunctive_pass_grouping for
+    a synthetic case where the two formulations disagree.
+    """
+    return any(
+        len(flags) == len(TAUS) and all(flags)
+        for flags in per_dataset_flags.values()
+    )
+
+
 def main():
     rows_md = ["| d | τ | B_sim | B_d | |ΔB| | τ̂ | |τ̂−τ| | MW p | H_OFF1 | H_OFF2 | H_OFF3 |",
                "|---|---|---|---|---|---|---|---|---|---|---|"]
     rows_tex = []
-    overall = {"H_OFF1": [], "H_OFF2": [], "H_OFF3": []}
-    for vpath in sorted(glob.glob(str(ROOT / "results/verdicts/*.json"))):
+    # Per-hypothesis, per-dataset lists of tau-level pass flags (grouped, not flat)
+    # -- required so the disjunctive criterion below can check "all three tau
+    # pass for the SAME dataset" rather than "any cell anywhere passes".
+    per_dataset = {"H_OFF1": {}, "H_OFF2": {}, "H_OFF3": {}}
+    # 2026-09 bugfix (deviations register): results/verdicts/*.json also
+    # matches unrelated files written by other scripts into the same
+    # directory (hoff3_corrected.json, highd_sensitivity_provided_ttc.json,
+    # and -- if archived -- hoff3_ttc_ablation.json), none of which share
+    # this file's {"dataset": ..., "tests": {...}} schema. The old glob
+    # picked those up too and crashed with KeyError the first time this
+    # script was re-run after those files existed. Restrict the glob to the
+    # three actual per-dataset confirmatory-verdict files by name.
+    DATASETS = ("highd", "ngsim", "waymo")
+    for vpath in sorted(
+        str(ROOT / "results/verdicts" / f"{ds}.json") for ds in DATASETS
+    ):
+        if not Path(vpath).exists():
+            continue
         with open(vpath) as f:
             v = json.load(f)
         ds = v["dataset"]
         bpath = ROOT / "results/boundaries" / f"{ds}.json"
         with open(bpath) as fb:
             b = json.load(fb)
+        for hyp in per_dataset:
+            per_dataset[hyp].setdefault(ds, [])
         for tau in TAUS:
             key = f"{tau:.2f}"
             t = v["tests"][key]
@@ -43,11 +83,12 @@ def main():
                 f"{('%.2g' % p) if p else '---'} & "
                 f"{cell(t['H_OFF1'])} & {cell(t['H_OFF2'])} & {cell(t['H_OFF3'])} \\\\"
             )
-            overall["H_OFF1"].append(t["H_OFF1"]["pass"])
-            overall["H_OFF2"].append(t["H_OFF2"]["pass"])
-            overall["H_OFF3"].append(bool(t["H_OFF3"].get("pass")))
+            per_dataset["H_OFF1"][ds].append(bool(t["H_OFF1"]["pass"]))
+            per_dataset["H_OFF2"][ds].append(bool(t["H_OFF2"]["pass"]))
+            per_dataset["H_OFF3"][ds].append(bool(t["H_OFF3"].get("pass")))
     summary = " | ".join(
-        f"{k}: {'PASS' if any(v) else 'FAIL'}" for k, v in overall.items()
+        f"{hyp}: {'PASS' if disjunctive_pass(per_ds) else 'FAIL'}"
+        for hyp, per_ds in per_dataset.items()
     )
     out_md = ROOT / "results/figures/table_verdicts.md"
     out_md.write_text(f"**Overall (disjunctive):** {summary}\n\n" + "\n".join(rows_md), encoding="utf-8")

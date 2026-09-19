@@ -40,9 +40,20 @@ def extract_ngsim_at_scale(n_max, output_path):
         g = df[(df["Location"] == loc) & (df["Vehicle_ID"] == vid)].sort_values("Frame_ID").reset_index(drop=True)
         feats, ttc, ok, reason = ngsim_extract(g, frame_index=frame_index)
         if not ok or feats is None:
-            n_excluded[reason if reason in n_excluded else "other"] = (
-                n_excluded.get(reason, 0) + 1
-            ); continue
+            # 2026-09 bugfix (deviations register): this previously looked up
+            # n_excluded.get(reason, 0) -- using the RAW reason string -- even
+            # when the assignment key was remapped to "other" for a reason not
+            # already in the dict (e.g. "missing_frames_above_10pct" from the
+            # missing-tick fix above, or "empty"/"non_finite" from
+            # src.utils.is_eligible). Since that raw reason is never itself a
+            # dict key, .get() always returned the 0 default, so n_excluded
+            # ["other"] was reset to 1 on every such exclusion instead of
+            # accumulating -- undercounting the true "other" total, though it
+            # never affected which trajectories were accepted (out) or the
+            # final eligible count, only this diagnostic breakdown.
+            _key = reason if reason in n_excluded else "other"
+            n_excluded[_key] = n_excluded.get(_key, 0) + 1
+            continue
         out.append({
             "trajectory_id": f"{loc}__{int(vid)}",
             "T": int(feats.shape[0]),
@@ -83,9 +94,14 @@ def extract_waymo_at_scale(n_max, output_path):
                 if len(out) >= n_max: break
                 feats, ttc, ok, reason = waymo_extract(sc)
                 if not ok or feats is None:
-                    n_excluded[reason if reason in n_excluded else "other"] = (
-                        n_excluded.get(reason, 0) + 1
-                    ); continue
+                    # 2026-09 bugfix (deviations register): see identical fix
+                    # in extract_ngsim_at_scale above -- the old code used the
+                    # raw `reason` for the .get() lookup instead of the
+                    # possibly-remapped "other" key, so any reason not already
+                    # in n_excluded reset "other" to 1 instead of accumulating.
+                    _key = reason if reason in n_excluded else "other"
+                    n_excluded[_key] = n_excluded.get(_key, 0) + 1
+                    continue
                 out.append({
                     "trajectory_id": sc.scenario_id,
                     "T": int(feats.shape[0]),
@@ -144,9 +160,14 @@ def extract_highd_at_scale(n_max, output_path, highd_dir=None):
             g = tracks[tracks["id"] == vid].sort_values("frame").reset_index(drop=True)
             feats, ttc, ok, reason = highd_extract(g, recording_meta=rmeta, frame_index=frame_index)
             if not ok or feats is None:
-                n_excluded[reason if reason in n_excluded else "other"] = (
-                    n_excluded.get(reason, 0) + 1
-                ); continue
+                # 2026-09 bugfix (deviations register): see identical fix in
+                # extract_ngsim_at_scale above -- the old code used the raw
+                # `reason` for the .get() lookup instead of the possibly-
+                # remapped "other" key, so any reason not already in
+                # n_excluded reset "other" to 1 instead of accumulating.
+                _key = reason if reason in n_excluded else "other"
+                n_excluded[_key] = n_excluded.get(_key, 0) + 1
+                continue
             out.append({
                 "trajectory_id": f"{int(rid):02d}__{int(vid)}",
                 "T": int(feats.shape[0]),

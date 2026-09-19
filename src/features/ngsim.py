@@ -66,7 +66,25 @@ def extract_features(traj_df, all_frames_df=None, frame_index=None):
     traj_df = traj_df.drop_duplicates(subset="Frame_ID", keep="first").reset_index(drop=True)
     n = len(traj_df)
     if n < 5 * FS_HZ:
-        return None, None, False, "too_short" 
+        return None, None, False, "too_short"
+
+    # Pre-reg exclusion: trajectories with >10% missing ticks are excluded.
+    # "Missing" means gaps in the Frame_ID sequence (tracking dropouts),
+    # measured against the trajectory's own recorded Frame_ID span --
+    # Frame_ID is an integer per-frame counter, so the expected tick count
+    # over [min(Frame_ID), max(Frame_ID)] is exact.
+    #
+    # 2026-09 fix (deviations register): this check was previously absent.
+    # Only |a|>10 m/s^2 (below) and an all-or-nothing non-finite-position
+    # check (also below) were enforced, so a vehicle with real tracking
+    # gaps but >=5 s of *recorded* ticks was not excluded on missing-data
+    # grounds even though the pre-registration and this module's own
+    # docstring specify a >10% missing-ticks exclusion.
+    frame_ids = traj_df["Frame_ID"].to_numpy(np.int64)
+    n_expected = int(frame_ids.max() - frame_ids.min()) + 1
+    frac_missing = 1.0 - (n / n_expected)
+    if frac_missing > 0.10:
+        return None, None, False, "missing_frames_above_10pct"
 
     # NGSIM units: feet to meters (1 ft = 0.3048 m); v_Vel and v_Acc are in ft/s and ft/s^2.
     # Convert immediately.
