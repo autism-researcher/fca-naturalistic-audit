@@ -1,0 +1,80 @@
+{
+  "highd": {
+    "0.10": {
+      "r_full_matched": -0.014000000000000012,
+      "r_ablated": -0.011776000000000009,
+      "p_ablated": 5.358162525189032e-06,
+      "pass_ablated": true,
+      "n_crossing": 500,
+      "survives": false
+    },
+    "0.15": {
+      "r_full_matched": -0.009333333333333416,
+      "r_ablated": -0.009333333333333416,
+      "p_ablated": 1.6682768139841028e-06,
+      "pass_ablated": true,
+      "n_crossing": 750,
+      "survives": false
+    },
+    "0.20": {
+      "r_full_matched": -0.006999999999999895,
+      "r_ablated": -0.006999999999999895,
+      "p_ablated": 1.2586204642789369e-05,
+      "pass_ablated": true,
+      "n_crossing": 1000,
+      "survives": false
+    }
+  },
+  "ngsim": {
+    "0.10": {
+      "r_full_matched": -0.7670432499142612,
+      "r_ablated": -0.560818236208567,
+      "p_ablated": 9.9999990000001e-08,
+      "pass_ablated": true,
+      "n_crossing": 298,
+      "survives": true
+    },
+    "0.15": {
+      "r_full_matched": -0.7421064071164265,
+      "r_ablated": -0.5040828624037377,
+      "p_ablated": 9.9999990000001e-08,
+      "pass_ablated": true,
+      "n_crossing": 447,
+      "survives": true
+    },
+    "0.20": {
+      "r_full_matched": -0.7173019458299419,
+      "r_ablated": -0.5028487581217067,
+      "p_ablated": 9.9999990000001e-08,
+      "pass_ablated": true,
+      "n_crossing": 596,
+      "survives": true
+    }
+  },
+  "waymo": {
+    "0.10": {
+      "r_full_matched": -0.29254222222222226,
+      "r_ablated": -0.10618400000000006,
+      "p_ablated": 9.9999990000001e-08,
+      "pass_ablated": true,
+      "n_crossing": 500,
+      "survives": true
+    },
+    "0.15": {
+      "r_full_matched": -0.23602039215686266,
+      "r_ablated": -0.0864727843137254,
+      "p_ablated": 9.9999990000001e-08,
+      "pass_ablated": true,
+      "n_crossing": 750,
+      "survives": false
+    },
+    "0.20": {
+      "r_full_matched": -0.19439300000000004,
+      "r_ablated": -0.07288025000000009,
+      "p_ablated": 9.9999990000001e-08,
+      "pass_ablated": true,
+      "n_crossing": 1000,
+      "survives": false
+    }
+  }
+}
