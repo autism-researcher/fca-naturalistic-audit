@@ -11,5 +11,8 @@
   },
   "B_sim_provenance": "Calibrated boundary of the supervisor under audit: the (1-tau) quantile of simulator NORMAL-driving peak risk, averaged over calibration seeds. Reproducible from data/sim_calibration/sim_normal_peak_risk.csv via compute_B.py --recompute (agreement within 0.003).",
   "DKW_epsilon_at_N5000_delta05": 0.0193,
-  "DKW_N_floor_eps05_delta05": 738
+  "DKW_N_floor_eps05_delta05": 738,
+  "DKW_N_floor_eps05_delta05_note": "N such that eps_DKW(N, delta=0.05) alone is <= 0.05, ignoring the 1/N finite-sample term of the full bound eps_DKW + 1/N.",
+  "DKW_N_floor_full_bound_eps05_delta05": 778,
+  "DKW_N_floor_full_bound_eps05_delta05_note": "N such that the FULL bound eps_DKW(N, delta=0.05) + 1/N is <= 0.05. This is the operational threshold used by the paper (datasets with N_d < 778 are flagged underpowered)."
 }

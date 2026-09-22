@@ -4,6 +4,13 @@ Pre-registered, multi-dataset validation of a quantile-calibrated FCA supervisor
 Locked OSF pre-registration: 2026-05-11. Self-contained: the supervisor under audit
 (risk weights and calibrated boundaries B_sim) is fully specified within this repo.
 
+**Reproducing the published Table III results:** run the numbered pipeline in
+`scripts/` (see "Run order" below), which applies this repo's actual feature
+extraction and the pre-registered eligibility exclusions. `compute_B.py` at
+the repo root is a smaller demo/sanity-check script for the boundary rule
+itself and does **not** reproduce Table III by default (its `--real` data
+path is not yet implemented) — see its own docstring for details.
+
 ---
 
 ## Project layout
@@ -12,7 +19,8 @@ Locked OSF pre-registration: 2026-05-11. Self-contained: the supervisor under au
 fca-naturalistic-audit/
 ├── carla_weights.json         # 8 composite-risk weights (frozen, sum 0.94)
 ├── supervisor_spec.json       # supervisor under audit: risk weights + calibrated B_sim per τ
-├── compute_B.py               # recompute B_sim (sim) and B_d (naturalistic) with one rule
+├── compute_B.py                # demo/sanity-check of the B_sim/B_d boundary rule only;
+│                                 NOT the reproduction path for Table III (see "Run order")
 ├── data/sim_calibration/      # simulator NORMAL peak-risk sample -> reproduces B_sim
 ├── deviations_log.md
 ├── requirements.txt
@@ -86,7 +94,12 @@ The pipeline maps directly onto the 9 conceptual stages of the workflow. Run in 
 python tests/test_pipeline.py
 ```
 
-Confirms weights sum to 0.94, composite risk is bounded, DKW floor at N=738 gives ε≈0.05, boundary and realized-rate logic are correct, H_OFF1 / H_OFF3 behave as expected on synthetic data.
+Confirms weights sum to 0.94, composite risk is bounded, boundary and
+realized-rate logic are correct, H_OFF1 / H_OFF3 behave as expected on
+synthetic data. DKW floor at N=738 gives ε_DKW≈0.05 from the ε_DKW(N,δ)
+term alone (ignoring the 1/N finite-sample term); the paper's operational
+underpowered-flagging threshold, which includes that term, is N=778 (see
+`supervisor_spec.json`'s `DKW_N_floor_full_bound_eps05_delta05`).
 
 ---
 
@@ -121,7 +134,7 @@ Once the pilot looks right, scale up to N=5000 and re-run scripts 03-08.
 
 ## Hard rules (from pre-registration §3, §13)
 
-1. No boundary computation on naturalistic data before the OSF pre-reg is locked (it is — 2026-05-11) and before Gate 2 (Git tag `pipeline-frozen-pre-confirmatory`).
+1. No boundary computation on naturalistic data before the OSF pre-reg is locked (it is — 2026-05-11) and before Gate 2 (Git tag `pipeline-frozen-pre-confirmatory`). When a working copy is not a Git working tree and the tag cannot be queried, the frozen state is instead recorded by a SHA-256 tree hash over `src/`, `scripts/`, and the frozen config files, per the pre-declared fallback documented in `deviations_log.md`.
 2. Composite-risk weights are frozen at `carla_weights.json`; no retuning permitted.
 3. Sampling uses `SEED = 42` from `src/utils.py`; do not re-roll.
 4. Save raw TTC alongside normalized TTC — H_OFF3 needs the raw 2-second threshold.

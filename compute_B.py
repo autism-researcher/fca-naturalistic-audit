@@ -10,15 +10,29 @@ Only the DATA differs:
     B_sim = rule applied to the SIMULATOR's NORMAL-driving peak risks.
             Deployed values live in  supervisor_spec.json  and are reproducible
             from  data/sim_calibration/sim_normal_peak_risk.csv.
-    B_d   = rule applied to the REAL dataset's 5000 trajectories
-            in data/<dataset>/  (HighD / NGSIM / Waymo).
+    B_d   = rule applied to the REAL dataset's trajectories
+            in data/<dataset>/  (HighD / NGSIM / Waymo). Confirmatory N is
+            5,000 for HighD/Waymo and 2,979 for NGSIM after the pre-registered
+            eligibility exclusions (see deviations_log.md); this script's
+            --real path is a placeholder and does not yet apply those
+            exclusions or load the real per-trajectory features.
+
+IMPORTANT -- this is a demo/sanity-check script, NOT the reproduction path
+for the published Table III boundaries. Without --real (the default), B_d
+is computed on FABRICATED normal-distributed data for illustration only.
+--real is not yet implemented (raises NotImplementedError). The actual
+reproduction pipeline for the published naturalistic results is the
+numbered script sequence in scripts/ (see README.md, "Run order"):
+    scripts/03_extract_features_at_scale.py
+      -> scripts/04_compute_boundaries.py -> scripts/05_run_tests.py
 
 H_OFF1 verdict per (dataset, tau):  PASS if |B_sim - B_d| < 0.03, else FAIL.
 
 Run:
-    python compute_B.py               # B_sim from supervisor_spec.json (deployed)
+    python compute_B.py               # B_sim from supervisor_spec.json (deployed);
+                                       # B_d from FABRICATED demo data (see above)
     python compute_B.py --recompute   # B_sim recomputed live from the shipped sample
-    python compute_B.py --real        # use real data/<dataset>/ for B_d (when added)
+    python compute_B.py --real        # NOT YET IMPLEMENTED -- raises NotImplementedError
 """
 
 import argparse
@@ -71,13 +85,23 @@ def recompute_B_sim():
 # 2)  B_d
 # ----------------------------------------------------------------------
 def get_rmax_list(dataset, real):
+    """DEMO DATA ONLY when real=False (default): fabricated normal-distributed
+    peak risks, for illustrating the boundary/verdict mechanics only. These do
+    NOT reproduce the published Table III B_d values -- for that, run the
+    numbered pipeline in scripts/ (see README.md, "Run order"), which applies
+    this repo's actual feature extraction and the pre-registered eligibility
+    exclusions (confirmatory N: 5,000 HighD/Waymo, 2,979 NGSIM)."""
     if real:
         raise NotImplementedError(
-            f"Put raw {dataset} data in data/{dataset}/ and load features here.")
+            f"--real is not yet implemented for compute_B.py. Put raw "
+            f"{dataset} data in data/{dataset}/ and load features here, "
+            f"or use the numbered pipeline in scripts/ instead, which "
+            f"already implements this end to end.")
     rng = np.random.default_rng(42)
     centre = {"highd": 0.30, "ngsim": 0.80, "waymo": 0.35}[dataset]
+    n_demo = 5000
     return [r_max_from_features(np.clip(rng.normal(centre, 0.12, (30, 8)), 0, 1))
-            for _ in range(5000)]
+            for _ in range(n_demo)]
 
 # ----------------------------------------------------------------------
 # MAIN
@@ -90,6 +114,11 @@ def main(real=False, recompute=False):
     src = f"recomputed from {SIM_SAMPLE}" if recompute else f"deployed values in {SPEC}"
     print(f"B_sim ({src}):", {f"{t:.2f}": round(B_sim[t], 4) for t in TAUS})
     print()
+    if not real:
+        print("*** DEMO MODE: B_d below is computed on FABRICATED data, not the ***")
+        print("*** real HighD/NGSIM/Waymo corpora. It does NOT reproduce Table III. ***")
+        print("*** For the published results, run the scripts/ pipeline (see README). ***")
+        print()
     print(f"{'dataset':7} {'tau':4} {'B_sim':7} {'B_d':7} {'|dB|':7} {'tau_hat':7} verdict")
     print("-" * 56)
     overall_pass = False
@@ -110,11 +139,17 @@ def main(real=False, recompute=False):
     print("H_OFF1 overall:", "PASS" if overall_pass else "FAIL",
           "(passes only if some dataset is within 0.03 at ALL three tau)")
     if not real:
-        print("\n[demo mode: naturalistic B_d numbers are fabricated. Use --real with data/ filled in.]")
+        print("\n[demo mode: naturalistic B_d numbers are fabricated. Not the published")
+        print(" Table III results -- see scripts/ for the actual reproduction pipeline.]")
 
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--real", action="store_true", help="use real data/ for B_d")
+    ap = argparse.ArgumentParser(
+        description="Demo/sanity-check script for the B_sim/B_d boundary rule. "
+                     "Does NOT reproduce the published Table III naturalistic "
+                     "results by default -- see scripts/ for that pipeline.")
+    ap.add_argument("--real", action="store_true",
+                     help="NOT YET IMPLEMENTED: raises NotImplementedError. "
+                          "Use the scripts/ pipeline for real data instead.")
     ap.add_argument("--recompute", action="store_true", help="recompute B_sim from shipped sample")
     a = ap.parse_args()
     main(real=a.real, recompute=a.recompute)
