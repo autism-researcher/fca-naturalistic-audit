@@ -3,7 +3,7 @@ Verify ALL THREE processed datasets (NGSIM, HighD, Waymo) against the paper.
 
 Reads results/per_dataset/*_features.json and, for each dataset x tau,
 recomputes B_d and tau_hat straight from the processed data, then prints
-them next to the paper's Table II values with a MATCH/CHECK flag.
+them next to the paper's Table III values with a MATCH/CHECK flag.
 
 This answers one question directly: does the processed data on disk
 reproduce the numbers printed in the paper?
@@ -25,7 +25,7 @@ WEIGHTS = np.array([0.08, 0.10, 0.10, 0.08, 0.12, 0.25, 0.15, 0.06])
 TAUS = [0.10, 0.15, 0.20]
 B_SIM = {0.10: 0.5116, 0.15: 0.4885, 0.20: 0.4733}
 
-# --- the paper's Table II (B_d, tau_hat) per dataset x tau ----------------
+# --- the paper's Table III (B_d, tau_hat) per dataset x tau ----------------
 PAPER = {
     "ngsim": {0.10: (0.778, 0.734), 0.15: (0.746, 0.794), 0.20: (0.718, 0.825)},
     "highd": {0.10: (0.314, 0.002), 0.15: (0.301, 0.004), 0.20: (0.290, 0.005)},
@@ -48,7 +48,7 @@ def main():
         sys.exit("No results/per_dataset/*_features.json found.")
 
     print("=" * 84)
-    print("VERIFY PROCESSED DATA vs PAPER TABLE II   (B_sim frozen: "
+    print("VERIFY PROCESSED DATA vs PAPER TABLE III   (B_sim frozen: "
           "0.5116 / 0.4885 / 0.4733)")
     print("=" * 84)
 
@@ -86,7 +86,7 @@ def main():
         print(f"Largest deviation from the paper over {checked} checked cells: {worst:.4f}"
               f"   (tolerance {TOL})")
         print("VERDICT:",
-              "PASS — every processed dataset reproduces Table II within tolerance."
+              "PASS — every processed dataset reproduces Table III within tolerance."
               if allok else
               ("PARTIAL — checked cells match; process the missing dataset(s) above."
                if worst <= TOL else
