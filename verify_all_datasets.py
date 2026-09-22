@@ -1,5 +1,5 @@
 """
-Verify ALL THREE processed datasets (NGSIM, HighD, Waymo) against the paper.
+Verify all three processed datasets (NGSIM, HighD, Waymo) against the paper.
 
 Reads results/per_dataset/*_features.json and, for each dataset x tau,
 recomputes B_d and tau_hat straight from the processed data, then prints

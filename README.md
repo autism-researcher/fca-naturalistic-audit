@@ -19,8 +19,7 @@ path is not yet implemented) — see its own docstring for details.
 fca-naturalistic-audit/
 ├── carla_weights.json         # 8 composite-risk weights (frozen, sum 0.94)
 ├── supervisor_spec.json       # supervisor under audit: risk weights + calibrated B_sim per τ
-├── compute_B.py                # demo/sanity-check of the B_sim/B_d boundary rule only;
-│                                 NOT the reproduction path for Table III (see "Run order")
+├── compute_B.py                # demo/sanity-check of the boundary rule (see intro above)
 ├── data/sim_calibration/      # simulator NORMAL peak-risk sample -> reproduces B_sim
 ├── deviations_log.md
 ├── requirements.txt

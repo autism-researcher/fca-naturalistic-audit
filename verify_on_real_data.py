@@ -1,8 +1,8 @@
 """
-Forensic check ON YOUR REAL EXTRACTED DATA.
+Cross-check against your real extracted data.
 
-Cross-validates the consolidated pipeline against the repo's OWN
-authoritative functions (src/boundary.py, src/risk.py) — the exact code
+Cross-validates the consolidated pipeline against the repo's own
+authoritative functions (src/boundary.py, src/risk.py) — the same code
 the paper uses — on whatever is in results/per_dataset/*_features.json.
 
 It proves three things, per dataset, to machine precision:
@@ -26,7 +26,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
-# ---- the repo's OWN authoritative code = the reference -----------------------
+# ---- the repo's own authoritative code = the reference -----------------------
 try:
     from src.risk import composite_risk as REPO_risk
     from src.boundary import boundary as REPO_boundary, realized_rate as REPO_realized

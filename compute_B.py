@@ -1,38 +1,39 @@
 """
 compute_B.py  --  naturalistic audit, hypothesis H_OFF1
 =================================================================
-SELF-CONTAINED. No dependency on any other paper. Both boundaries use ONE rule.
+Self-contained: no dependency on any other paper. Both boundaries use the
+same rule.
 
-THE RULE (identical for both):
+The rule (identical for both):
     B = the (1 - tau) quantile of the per-trajectory peak risk R_max.
 
-Only the DATA differs:
-    B_sim = rule applied to the SIMULATOR's NORMAL-driving peak risks.
-            Deployed values live in  supervisor_spec.json  and are reproducible
-            from  data/sim_calibration/sim_normal_peak_risk.csv.
-    B_d   = rule applied to the REAL dataset's trajectories
-            in data/<dataset>/  (HighD / NGSIM / Waymo). Confirmatory N is
-            5,000 for HighD/Waymo and 2,979 for NGSIM after the pre-registered
-            eligibility exclusions (see deviations_log.md); this script's
-            --real path is a placeholder and does not yet apply those
-            exclusions or load the real per-trajectory features.
+Only the data differs:
+    B_sim = rule applied to the simulator's normal-driving peak risks.
+            Deployed values live in supervisor_spec.json and are reproducible
+            from data/sim_calibration/sim_normal_peak_risk.csv.
+    B_d   = rule applied to the real dataset's trajectories in
+            data/<dataset>/ (HighD / NGSIM / Waymo). Confirmatory N is
+            5,000 for HighD/Waymo and 2,979 for NGSIM after the
+            pre-registered eligibility exclusions (see deviations_log.md);
+            this script's --real path is a placeholder and does not yet
+            apply those exclusions or load the real per-trajectory features.
 
-IMPORTANT -- this is a demo/sanity-check script, NOT the reproduction path
-for the published Table III boundaries. Without --real (the default), B_d
-is computed on FABRICATED normal-distributed data for illustration only.
---real is not yet implemented (raises NotImplementedError). The actual
-reproduction pipeline for the published naturalistic results is the
-numbered script sequence in scripts/ (see README.md, "Run order"):
+This script demonstrates the boundary rule on synthetic data; it is not
+the reproduction path for the published Table III results. Without --real
+(the default), B_d is computed on synthetic normal-distributed data for
+illustration only, and --real itself is not yet implemented (it raises
+NotImplementedError). Reproduction of Table III is implemented by the
+numbered pipeline in scripts/ (see README.md, "Run order"):
     scripts/03_extract_features_at_scale.py
       -> scripts/04_compute_boundaries.py -> scripts/05_run_tests.py
 
-H_OFF1 verdict per (dataset, tau):  PASS if |B_sim - B_d| < 0.03, else FAIL.
+H_OFF1 verdict per (dataset, tau): PASS if |B_sim - B_d| < 0.03, else FAIL.
 
 Run:
     python compute_B.py               # B_sim from supervisor_spec.json (deployed);
-                                       # B_d from FABRICATED demo data (see above)
+                                       # B_d from synthetic demo data (see above)
     python compute_B.py --recompute   # B_sim recomputed live from the shipped sample
-    python compute_B.py --real        # NOT YET IMPLEMENTED -- raises NotImplementedError
+    python compute_B.py --real        # not yet implemented; raises NotImplementedError
 """
 
 import argparse
@@ -85,11 +86,11 @@ def recompute_B_sim():
 # 2)  B_d
 # ----------------------------------------------------------------------
 def get_rmax_list(dataset, real):
-    """DEMO DATA ONLY when real=False (default): fabricated normal-distributed
-    peak risks, for illustrating the boundary/verdict mechanics only. These do
-    NOT reproduce the published Table III B_d values -- for that, run the
-    numbered pipeline in scripts/ (see README.md, "Run order"), which applies
-    this repo's actual feature extraction and the pre-registered eligibility
+    """Demo data only when real=False (default): synthetic normal-distributed
+    peak risks, for illustrating the boundary/verdict mechanics. These do not
+    reproduce the published Table III B_d values; for that, run the numbered
+    pipeline in scripts/ (see README.md, "Run order"), which applies this
+    repo's actual feature extraction and the pre-registered eligibility
     exclusions (confirmatory N: 5,000 HighD/Waymo, 2,979 NGSIM)."""
     if real:
         raise NotImplementedError(
@@ -115,9 +116,9 @@ def main(real=False, recompute=False):
     print(f"B_sim ({src}):", {f"{t:.2f}": round(B_sim[t], 4) for t in TAUS})
     print()
     if not real:
-        print("*** DEMO MODE: B_d below is computed on FABRICATED data, not the ***")
-        print("*** real HighD/NGSIM/Waymo corpora. It does NOT reproduce Table III. ***")
-        print("*** For the published results, run the scripts/ pipeline (see README). ***")
+        print("Demo mode: B_d below is computed on synthetic data, not the real")
+        print("HighD/NGSIM/Waymo corpora, so it does not reproduce Table III.")
+        print("For the published results, run the scripts/ pipeline (see README).")
         print()
     print(f"{'dataset':7} {'tau':4} {'B_sim':7} {'B_d':7} {'|dB|':7} {'tau_hat':7} verdict")
     print("-" * 56)
@@ -139,16 +140,16 @@ def main(real=False, recompute=False):
     print("H_OFF1 overall:", "PASS" if overall_pass else "FAIL",
           "(passes only if some dataset is within 0.03 at ALL three tau)")
     if not real:
-        print("\n[demo mode: naturalistic B_d numbers are fabricated. Not the published")
+        print("\n[demo mode: naturalistic B_d numbers are synthetic. Not the published")
         print(" Table III results -- see scripts/ for the actual reproduction pipeline.]")
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(
         description="Demo/sanity-check script for the B_sim/B_d boundary rule. "
-                     "Does NOT reproduce the published Table III naturalistic "
+                     "Does not reproduce the published Table III naturalistic "
                      "results by default -- see scripts/ for that pipeline.")
     ap.add_argument("--real", action="store_true",
-                     help="NOT YET IMPLEMENTED: raises NotImplementedError. "
+                     help="Not yet implemented; raises NotImplementedError. "
                           "Use the scripts/ pipeline for real data instead.")
     ap.add_argument("--recompute", action="store_true", help="recompute B_sim from shipped sample")
     a = ap.parse_args()

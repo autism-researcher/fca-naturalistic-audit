@@ -4,7 +4,7 @@ compute the statistically valid exact/permutation p-values.
 
 What this shows
 ---------------
-1. The pipeline's U and rank-biserial r are trajectory-level and CORRECT.
+1. The pipeline's U and rank-biserial r are trajectory-level and correct.
 2. The reported p-values came from scipy's tie-corrected normal
    approximation, which is invalid here (HighD: ~99.9% of per-trajectory
    TTC<2s counts are zero, n1 as small as 8 -> variance collapses,
