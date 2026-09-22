@@ -160,7 +160,7 @@ def main():
     arrow(ax, 6.0, 10.18, 6.0, 9.50)
     arrow(ax, 9.0, 10.18, 9.0, 9.50)
 
-    gate_marker(ax, 8.30, "Gate 2\n(Git tag)")
+    gate_marker(ax, 8.30, "Gate 2\n(tree-hash anchor)")
 
     # Row 3: features (raw TTC is NOT an input to R; it is retained
     # separately for H_OFF3 -- label made explicit per review)

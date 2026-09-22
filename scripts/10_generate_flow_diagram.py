@@ -110,7 +110,7 @@ ax.text(0.05, 8.15, "Gate 1\n(OSF lock)",
         fontsize=9, color="#5b3da0", style="italic", fontweight="bold")
 
 ax.plot([0.05, 0.7], [6.45, 6.45], "k--", lw=0.8, alpha=0.7)
-ax.text(0.05, 6.65, "Gate 2\n(Git tag)",
+ax.text(0.05, 6.65, "Gate 2\n(tree-hash anchor)",
         fontsize=9, color="#5b3da0", style="italic", fontweight="bold")
 
 # Legend
